@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>数组</title>
+</head>
+<body>
+	
+</body>
+</html>
+<script>
+    //数组方式的规律数字1,1,2,3,5,8,13,21,34,55,89,144
+     var x=[1,1];
+     for(var i=2;i<12;i++){
+     	x[i]=x[i-1]+x[i-2];
+     }
+     document.write(x+'&nbsp;'+'<br/>');
+     //水仙花
+     var i,x,y,z;
+     document.write('1000以内的水仙花数有：');
+     for(i=100;i<1000;i++){
+     	x=parseInt(i/100);
+     	y=parseInt((i-x*100)/10);
+     	z=parseInt(i-x*100-y*10);
+     	if(x*x*x+y*y*y+z*z*z==i){
+     		document.write(i+'&nbsp;');
+     	}
+     }
+     document.write('<br>');
+     //数组中的最大值
+     var arr=[32,22,6,27,1,93];
+     max(arr);
+     function max(one){
+      var max=one[0];
+      document.write('数组为：'+one+'&nbsp;');
+     for(var i=0;i<one.length;i++){
+     	if(max<one[i]){
+     		max=one[i];
+     	}
+     }
+     document.write('最大值为:'+max+'<br>');
+    }
+    document.write('<br>');
+
+     //从大到小排序
+      var a=[32,22,6,27,1,93,9,71,15,24,109];
+      pai(a);
+      function pai(xu){
+        document.write('初始数组为：'+xu+'<br>');
+      for(var i=0;i<xu.length;i++){
+      	var temp;
+      	for(var j=i+1;j<xu.length;j++){
+      	  if(a[i]<a[j]){
+      		  temp=a[i];
+      		  a[i]=a[j];
+      		  a[j]=temp;
+      	  }
+        }
+     }
+      document.write('从大到小排序之后的数组：'+a);
+    }
+    document.write('<br>');
+
+      //遍历二维数组
+      var a=[[89,22,],[31,47,],[53,,62]];
+      Array(a);
+      function Array(two){
+        document.write('二维数组为：');
+      for(i=0;i<two.length;i++){
+      	for(j=0;j<two[i].length;j++){
+      		document.write(two[i][j]+'&nbsp;');
+      	}
+      }
+    }
+    document.write('<br>');
+      //二维数组最大值
+      var a=[[2,22,],[31,47,],[53,,62]];
+      maxArray(a);
+      function maxArray(old){
+        document.write('二维数组为：'+old+'&nbsp;');
+      	max=old[0][0];
+      for(var i=0;i<old.length;i++){
+      	for(var j=0;j<old[i].length;j++){
+      		if(max<old[i][j]){
+      			max=old[i][j];
+      		}
+      	}
+      }
+      document.write('二维数组的最大值为：'+max+'<br>');
+  }
+      document.write('<br>');
+      //删除undefined
+      var a=[1,2,,4,5,6,,7,8];
+      var a1=[];
+      delect(a,a1);
+      function delect(a,a1){
+        document.write("原数组为"+a+'&nbsp;');
+      for(var i=0;i<a.length;i++){
+      	// typeof 运行的结果是string
+      	if((typeof a[i])!= 'undefined'){
+      		a1[a1.length]=a[i];
+      	}
+      }
+      document.write('删除undefined之后的数组为：'+a1);
+  }
+  document.write('<br>');
+	//某个数字在数组中首次出现的位置
+		//c 一个数组  value某个数字
+		var arr=[2,4,5,5,3,35,8];
+        console.log(indexOf(arr,5));
+		function indexOf(c,value){
+			for(var i=0;i<c.length;i++){
+				if(c[i]==value){
+					return i;
+				}
+			}
+		return -1;
+		}
+		//某个数字在数组中最后一次出现的位置
+		var arr=[2,4,5,5,3,35,8];
+        console.log(lastindexOf(arr,5));
+		function lastindexOf(c,value){
+			for(var i=c.length-1;i>=0;i--){
+				if(c[i]==value){
+					return i;
+				}
+			}
+		return -1;
+		}
+		//将数组中的元素颠倒顺序，返回逆序的数组
+		var arr=[2,4,5,5,3,,35,8];
+		console.log(reverse(arr));
+		function reverse(arr){
+			var b=[];
+			for(var i=arr.length-1;i>=0;i--){
+				//添加一个
+				push(b,arr[i]);
+			}
+			return b;
+		}
+		function push(arr,...value){
+			for(var i=0;i<value.length;i++){
+				arr[arr.length]=value[i];
+			}
+		}
+		//万能的添加或删除
+		//arr 数组  pos 位置 num删除的个数  rest添加的数
+		var arr=[2,4,5,5,3,,35,8];
+		console.log(splice(arr,1,2,'x','y','z'));
+		function splice(arr,pos,num,...rest){
+			//newarr 删除之后的数组
+			var newarr=spliceDelete(arr,pos,num);
+			if(rest.length>0){
+				newarr=spliceAdd(newarr,pos,...rest);
+			}
+			return newarr;
+		}
+		//数组中指定位置删除
+		//arr 数组  pos 开始删除的位置  num 删除的个数
+		var arr=[2,4,5,5,3,,35,8];
+		console.log(spliceDelete(arr,1,2));//》[4,5]
+		function spliceDelete(arr,pos,num){
+			var newarr=[];
+			for(var i=0;i<arr.length;i++){
+				//一个范围 开始删除位置到结束删除的位置
+				if(i>=pos && i<pos+num){
+					continue;
+				}
+				newarr[newarr.length]=arr[i];
+			}
+			return newarr;
+		}
+		//数组中指定位置添加
+		//arr 数组  pos 开始添加的位置  rest 添加的数
+		var arr=[2,4,5,5,3,,35,8];
+		console.log(spliceAdd(arr,1,6,'a','v'));
+		function spliceAdd(arr,pos,...rest){
+			var newarr=[];
+			for(var i=0;i<pos;i++){
+				newarr[newarr.length]=arr[i];
+			}
+			//rest作为一个数组插入
+			for(var i=0;i<rest.length;i++){
+				newarr[newarr.length]=rest[i];
+			}
+			for(var i=pos;i<arr.length;i++){
+				newarr[newarr.length]=arr[i];
+			}
+			return newarr;
+		}
+</script>
