@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>数组对象</title>
+	<script>
+		//数组
+		var arr=new myArray(1,2,3,3,'a','c');
+		//push 给数组末尾添加元素
+		arr.push('s','f');
+		//indexOf  元素在数组中第一次出现的位置
+		console.log(arr.indexOf('a'));//4
+		console.log(arr.indexOf(4));//false
+		//lastIndexOf 元素在数组中最后一次出现的位置
+		console.log(arr.lastIndexOf(3));//3
+		console.log(arr.lastIndexOf(6));//false
+		//incudes 数组中是否存在这个元素 
+		console.log(arr.includes(3));//true
+		console.log(arr.includes(5));//false
+		//reverse 数组颠倒顺序 返回逆序数组
+		console.log(arr.reverse());//["f", "s", "c", "a", 3, 3, 2, 1]
+		//join 数组转换成字符串
+		console.log(arr.join());//1-2-3-3-a-c-s-f
+		//sort  对数组进行排序
+		arr.sort('<');
+		arr.sortDown();
+		arr.sortUp();
+		//some 有一个满足条件的就返回true
+		let some=arr.some(function(value){
+			return typeof value=='number';
+		});
+		console.log(some);
+		//every  全部满足条件返回true
+		let every=arr.every(function(value){
+			return typeof value=='number';
+		});
+		console.log(every);
+		//map  数组的映射
+		var map=arr.map(function(value) {
+			return value%2==0;
+		});
+		console.log(map);
+		//filter  数组的过滤
+		var filter=arr.filter(function(value){
+			return typeof value=='string';
+		});
+		console.log(filter);
+		//输出数组
+	    console.log(arr);
+	    function myArray(){
+	    	for(var i=0;i<arguments.length;i++){
+	    		this[i]=arguments[i];
+	    	}
+	    	this.length=arguments.length;
+	    	//push  给数组末尾添加元素
+	    	this.push=function(){
+	    	    for (let i = 0; i < arguments.length; i++) {
+	    			this[this.length]=arguments[i];
+	    			this.length++;
+	    		}
+	    	};
+	    	//indexOf 某个元素在数组中首次出现的位置
+	    	this.indexOf=function(value){
+	    		for(let i=0;i<this.length;i++){
+	    			if(this[i]==value){
+	    				return i;
+	    			}
+	    		}
+	    		return false;
+	    	}
+	    	//lastIndexOf  某个元素在数组中最后一次出现的位置
+	    	this.lastIndexOf=function(value){
+	    		for(let i=this.length-1;i>=0;i--){
+	    			if(this[i]==value){
+	    				return i;
+	    			}
+	    		}
+	    		return false;
+	    	}
+	    	//includes  判断数组是否存在某一个值 存在true  否则false
+	    	this.includes=function(value){
+	    		for (let i = 0; i < this.length; i++) {
+	    			if(this[i]==value){
+	    				return true;
+	    			}
+	    		}
+	    		return false;
+	    	}
+	    	//reverse 元素顺序颠倒  返回逆序数组
+	    	this.reverse=function(){
+	    		let b=[];
+	    		for(let i=this.length-1;i>=0;i--){
+	    			b[b.length]=this[i];
+	    		}
+	    		return b;
+	    	}
+	    	//join 数组转换成字符串
+	    	this.join=function(value){
+	    		let str='';
+	    		value= value ==undefined? '-':value;
+	    		for (let i = 0; i < this.length; i++) {
+	    			if(i<this.length-1){
+	    			   str+=this[i]+value;
+	    		    }
+	    		    else{
+	    		       str+=this[i];
+	    		    }
+	    		}
+	    		return str;
+	    	}
+	    	//sort 对数组进行排序
+	    	this.sort=function(value){
+	    		value =value==undefined ? '>':value;
+	    		if(value=='>'){
+	    			this.sortDown();
+	    		}
+	    		else if(value=='<'){
+	    			this.sortUp();
+	    		}
+	    	}
+	    	//sortDown 对数组进行降序
+	    	this.sortDown=function(){
+	    		    for(let i=0;i<this.length;i++){
+	    			    for(let j=i+1;j<this.length;j++){
+      	                    if(this[i]<this[j]){
+      		                   var temp=this[i];
+      		                    this[i]=this[j];
+      		                    this[j]=temp;
+      	                    }
+                       }
+	    		    }
+	    		    console.log(this);
+	    	}
+	    	//sortUp  对数组进行升序
+	    	this.sortUp = function (){
+	    		    for(let i=0;i<this.length;i++){
+	    			    for(let j=i+1;j<this.length;j++){
+      	                    if(this[i]>this[j]){
+      		                   var temp=this[i];
+      		                    this[i]=this[j];
+      		                    this[j]=temp;
+      	                    }
+                       }
+	    		    }
+	    		    console.log(this);
+	    	}
+	    	//some  有一个满足就返回
+	    	this.some=function(fn){
+	    		for(let i=0;i<this.length;i++){
+	    			if(fn(this[i])){
+	    				return true;
+	    			}
+	    		}
+	    		return false;
+	    	}
+	    	//every  全部满足返回true
+	    	this.every=function(fn){
+	    		for(let i=0;i<this.length;i++){
+	    			if(fn(this[i])){
+	    				continue;
+	    			}
+	    			return false;
+	    		}
+	    		return true;
+	    	}
+	    	//map 映射
+	    	this.map=function(fn){
+	    		let b=[];
+	    		for(let i=0;i<this.length;i++){
+	    			if(fn(this[i])){
+	    				b[b.length]=this[i];
+	    			}
+	    		}
+	    		return b;
+	    	}
+	    	//filter 过滤
+	    	this.filter=function(fn){
+	    		let b=[]
+	    		for (let i = 0; i < this.length; i++) {
+	    			if(fn(this[i])){
+	    				b[b.length]=this[i];
+	    			}
+	    		}
+	    		return b;
+	    	};
+	    }
+	</script>
+</head>
+<body>
+	
+</body>
+</html>
