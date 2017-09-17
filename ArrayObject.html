@@ -5,9 +5,11 @@
 	<title>数组对象</title>
 	<script>
 		//数组
-		var arr=new myArray(1,2,3,3,'a','c');
+		var arr=new myArray(1,7,3,3,2,9,undefined,'a','c');
 		//push 给数组末尾添加元素
 		arr.push('s','f');
+		//输出数组
+	    console.log(arr);
 		//indexOf  元素在数组中第一次出现的位置
 		console.log(arr.indexOf('a'));//4
 		console.log(arr.indexOf(4));//false
@@ -18,13 +20,18 @@
 		console.log(arr.includes(3));//true
 		console.log(arr.includes(5));//false
 		//reverse 数组颠倒顺序 返回逆序数组
-		console.log(arr.reverse());//["f", "s", "c", "a", 3, 3, 2, 1]
+		console.log(arr.reverse());
 		//join 数组转换成字符串
-		console.log(arr.join());//1-2-3-3-a-c-s-f
+		console.log(arr.join());
 		//sort  对数组进行排序
-		arr.sort('<');
-		arr.sortDown();
-		arr.sortUp();
+		console.log(arr.sort('<'));
+		let a=arr.sortDown()
+		console.log(a);
+		// var q = arr.sortDown();
+		// for(var p in q) {
+		// 	console.log(`${q[p]}`);
+		// }
+		console.log(arr.sortUp());
 		//some 有一个满足条件的就返回true
 		let some=arr.some(function(value){
 			return typeof value=='number';
@@ -45,8 +52,8 @@
 			return typeof value=='string';
 		});
 		console.log(filter);
-		//输出数组
-	    console.log(arr);
+		//delnull 去空
+		console.log(arr.delnull());
 	    function myArray(){
 	    	for(var i=0;i<arguments.length;i++){
 	    		this[i]=arguments[i];
@@ -67,7 +74,7 @@
 	    			}
 	    		}
 	    		return false;
-	    	}
+	    	};
 	    	//lastIndexOf  某个元素在数组中最后一次出现的位置
 	    	this.lastIndexOf=function(value){
 	    		for(let i=this.length-1;i>=0;i--){
@@ -76,7 +83,7 @@
 	    			}
 	    		}
 	    		return false;
-	    	}
+	    	};
 	    	//includes  判断数组是否存在某一个值 存在true  否则false
 	    	this.includes=function(value){
 	    		for (let i = 0; i < this.length; i++) {
@@ -85,15 +92,15 @@
 	    			}
 	    		}
 	    		return false;
-	    	}
+	    	};
 	    	//reverse 元素顺序颠倒  返回逆序数组
 	    	this.reverse=function(){
-	    		let b=[];
+	    		let b=new myArray();
 	    		for(let i=this.length-1;i>=0;i--){
-	    			b[b.length]=this[i];
+	    			b.push(this[i]);
 	    		}
 	    		return b;
-	    	}
+	    	};
 	    	//join 数组转换成字符串
 	    	this.join=function(value){
 	    		let str='';
@@ -107,7 +114,7 @@
 	    		    }
 	    		}
 	    		return str;
-	    	}
+	    	};
 	    	//sort 对数组进行排序
 	    	this.sort=function(value){
 	    		value =value==undefined ? '>':value;
@@ -117,7 +124,8 @@
 	    		else if(value=='<'){
 	    			this.sortUp();
 	    		}
-	    	}
+	    		return this;
+	    	};
 	    	//sortDown 对数组进行降序
 	    	this.sortDown=function(){
 	    		    for(let i=0;i<this.length;i++){
@@ -129,8 +137,8 @@
       	                    }
                        }
 	    		    }
-	    		    console.log(this);
-	    	}
+	    		    return this;
+	    	};
 	    	//sortUp  对数组进行升序
 	    	this.sortUp = function (){
 	    		    for(let i=0;i<this.length;i++){
@@ -142,8 +150,8 @@
       	                    }
                        }
 	    		    }
-	    		    console.log(this);
-	    	}
+	    		    return this;
+	    	};
 	    	//some  有一个满足就返回
 	    	this.some=function(fn){
 	    		for(let i=0;i<this.length;i++){
@@ -152,7 +160,7 @@
 	    			}
 	    		}
 	    		return false;
-	    	}
+	    	};
 	    	//every  全部满足返回true
 	    	this.every=function(fn){
 	    		for(let i=0;i<this.length;i++){
@@ -162,27 +170,37 @@
 	    			return false;
 	    		}
 	    		return true;
-	    	}
+	    	};
 	    	//map 映射
 	    	this.map=function(fn){
-	    		let b=[];
+	    		let b=new myArray();
 	    		for(let i=0;i<this.length;i++){
 	    			if(fn(this[i])){
-	    				b[b.length]=this[i];
-	    			}
-	    		}
-	    		return b;
-	    	}
-	    	//filter 过滤
-	    	this.filter=function(fn){
-	    		let b=[]
-	    		for (let i = 0; i < this.length; i++) {
-	    			if(fn(this[i])){
-	    				b[b.length]=this[i];
+	    				b.push(this[i]);
 	    			}
 	    		}
 	    		return b;
 	    	};
+	    	//filter 过滤
+	    	this.filter=function(fn){
+	    		let b=new myArray();
+	    		for (let i = 0; i < this.length; i++) {
+	    			if(fn(this[i])){
+	    				b.push(this[i]);
+	    			}
+	    		}
+	    		return b;
+	    	};
+	    	//delnull 去空
+	    	this.delnull=function(){
+	    		let b=new myArray();
+	    		for(let i=0;i<this.length;i++){
+	    			if(this[i]!=undefined){
+	    			b.push(this[i]);
+	    		    }
+	    		}
+	    		return b;
+	    	}
 	    }
 	</script>
 </head>
